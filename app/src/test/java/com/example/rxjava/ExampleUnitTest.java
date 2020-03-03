@@ -30,7 +30,7 @@ public class ExampleUnitTest {
     public void getUserData() {
 
         TestObserver<List<User>> testSubscriber = TestObserver.create();
-        Observable<List<User>> userObservable = RestApi.getInstance().getUserDetails();
+        Observable<List<User>> userObservable = RestApi.getInstance().getUserLists();
         userArrayList = new ArrayList<>();
         userObservable.subscribe(testSubscriber);
         testSubscriber.assertSubscribed();

@@ -26,14 +26,14 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.OnIte
     private static final String EXTRA_USER_ID = "EXTRA_USER_ID";
     private static final String EXTRA_USER_EMAIL = "EXTRA_USER_EMAIL";
     private static final String EXTRA_USER_ADDRESS = "EXTRA_USER_ADDRESS";
+    private static final String EXTRA_USER_CITY = "EXTRA_USER_CITY";
+    private static final String EXTRA_USER_PHONENUMBER = "EXTRA_USER_PHONENUMBER";
 
     ArrayList<User> users = new ArrayList<>();
-
 
     private RecyclerView recyclerView;
 
     public UserAdapter userAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.OnIte
         intent.putExtra(EXTRA_REAL_NAME, users.get(position).getName());
         intent.putExtra(EXTRA_USER_EMAIL, users.get(position).getEmail());
         intent.putExtra(EXTRA_USER_ADDRESS, users.get(position).getAddress().getStreet());
+        intent.putExtra(EXTRA_USER_CITY, users.get(position).getAddress().getCity());
+        intent.putExtra(EXTRA_USER_PHONENUMBER, users.get(position).getPhone());
         startActivity(intent);
     }
 
@@ -70,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.OnIte
     private void fetchData() {
 
         RestApi.getInstance()
-                .getUserDetails()
+                .getUserLists()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<User>>() {

@@ -3,56 +3,133 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginStart="16dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="16dp"
     tools:context=".userdetails.UserDetailActivity">
 
-    <TextView
-        android:id="@+id/user_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="id" />
+    <ImageView
+        android:id="@+id/detail_image_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/black_bugatti" />
 
+    <ScrollView
+        android:id="@+id/detailScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_below="@+id/detail_image_placeholder"
+        android:layout_marginTop="8dp">
 
-    <TextView
-        android:id="@+id/user_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/user_id"
-        tools:text="UserName" />
+        <RelativeLayout
+            android:id="@+id/details_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp">
 
-    <TextView
-        android:id="@+id/real_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/user_name"
-        android:textSize="25sp"
-        tools:text="name" />
+            <TextView
+                android:id="@+id/user_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="UserId:"
+                android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/user_website"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/user_company"
-        tools:text="Website" />
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_below="@id/user_id"
+                android:text="UserName:"
+                android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/user_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/real_name"
-        tools:text="address" />
+            <TextView
+                android:id="@+id/real_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/user_name"
+                android:layout_marginTop="4dp"
+                android:text="FullName:"
+                android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/user_company"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/user_address"
-        tools:text="company" />
+            <TextView
+                android:id="@+id/user_website"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/user_company"
+                android:layout_marginTop="4dp"
+                android:text="Website:"
+                android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/user_phone"
-        android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/user_company"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/real_name"
+                android:text="company:"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/user_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/user_website"
+                android:layout_marginTop="4dp"
+                android:text="PhoneNumber"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/user_street_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/user_phone"
+                android:layout_marginTop="4dp"
+                android:hint="Address:"
+                android:text="StreetAddress"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/user_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/user_street_address"
+                android:layout_marginTop="4dp"
+                android:text="City"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/user_Email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/user_city"
+                android:layout_marginTop="4dp"
+                android:text="Email"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/button_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/user_company"
-        tools:text="phone" />
+        android:layout_below="@id/detailScrollView"
+        android:layout_marginBottom="16dp">
+
+        <Button
+            android:id="@+id/user_post_btn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="GET POST"
+            android:textSize="16dp" />
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/user_post_btn" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

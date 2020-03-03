@@ -3,6 +3,8 @@ package com.example.rxjava;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class User {
 
     @SerializedName("id")
@@ -29,6 +31,9 @@ public class User {
     @SerializedName("company")
     @Expose
     private Company company;
+    @SerializedName("post")
+    @Expose
+    private Post post;
 
     public Integer getId() {
         return id;
@@ -93,4 +98,13 @@ public class User {
     public void setCompany(Company company) {
         this.company = company;
     }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(List<Post> post) {
+        this.post = (Post) post;
+    }
+
 }
