@@ -111,12 +111,15 @@
 
     </ScrollView>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/button_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/detailScrollView"
-        android:layout_marginBottom="16dp">
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp">
 
         <Button
             android:id="@+id/user_post_btn"
@@ -130,6 +133,6 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/user_post_btn" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>
