@@ -21,13 +21,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity implements UserAdapter.OnItemClickListener {
 
-    private static final String EXTRA_REAL_NAME = "EXTRA_REAL_NAME";
-    private static final String EXTRA_USER_NAME = "EXTRA_USER_NAME";
     private static final String EXTRA_USER_ID = "EXTRA_USER_ID";
-    private static final String EXTRA_USER_EMAIL = "EXTRA_USER_EMAIL";
-    private static final String EXTRA_USER_ADDRESS = "EXTRA_USER_ADDRESS";
-    private static final String EXTRA_USER_CITY = "EXTRA_USER_CITY";
-    private static final String EXTRA_USER_PHONENUMBER = "EXTRA_USER_PHONENUMBER";
 
     ArrayList<User> users = new ArrayList<>();
 
@@ -55,17 +49,10 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.OnIte
     public void onItemClicked(int position) {
         Intent intent = new Intent(this, UserDetailActivity.class);
         intent.putExtra(EXTRA_USER_ID, users.get(position).getId().toString());
-        intent.putExtra(EXTRA_USER_NAME, users.get(position).getUsername());
-        intent.putExtra(EXTRA_REAL_NAME, users.get(position).getName());
-        intent.putExtra(EXTRA_USER_EMAIL, users.get(position).getEmail());
-        intent.putExtra(EXTRA_USER_ADDRESS, users.get(position).getAddress().getStreet());
-        intent.putExtra(EXTRA_USER_CITY, users.get(position).getAddress().getCity());
-        intent.putExtra(EXTRA_USER_PHONENUMBER, users.get(position).getPhone());
         startActivity(intent);
     }
 
     public void showUsers(ArrayList<User> users) {
-
         userAdapter.setUserList(users);
     }
 

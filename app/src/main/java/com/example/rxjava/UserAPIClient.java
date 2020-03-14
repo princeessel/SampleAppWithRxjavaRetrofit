@@ -11,8 +11,8 @@ public interface UserAPIClient {
     @GET("users")
     Observable<List<User>> getUsers();
 
-    @GET("users/{username}")
-    Observable<GetUserDetails> getUserDetails(@Path("username") String username);
+    @GET("users/{id}")
+    Observable<User> getUserDetails(@Path("id") String id);
 
     @GET("posts")
     Observable<List<Post>> getPosts();

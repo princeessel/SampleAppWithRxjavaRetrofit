@@ -1,36 +1,34 @@
 package com.example.rxjava.userdetails;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.rxjava.Post;
+import com.example.rxjava.PostAdapter;
 import com.example.rxjava.R;
+import com.example.rxjava.RestApi;
 import com.example.rxjava.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 public class UserDetailActivity extends AppCompatActivity {
 
-    private static final String EXTRA_REAL_NAME = "EXTRA_REAL_NAME";
-    private static final String EXTRA_USER_NAME = "EXTRA_USER_NAME";
     private static final String EXTRA_USER_ID = "EXTRA_USER_ID";
-    private static final String EXTRA_USER_EMAIL = "EXTRA_USER_EMAIL";
-    private static final String EXTRA_USER_ADDRESS = "EXTRA_USER_ADDRESS";
-    private static final String EXTRA_USER_CITY = "EXTRA_USER_CITY";
-    private static final String EXTRA_USER_WEBSITE = "EXTRA_USER_WEBSITE";
-    private static final String EXTRA_USER_COMPANY = "EXTRA_USER_COMPANY";
-    private static final String EXTRA_USER_PHONENUMBER = "EXTRA_USER_PHONENUMBER";
 
-    private ArrayList<Post> posts;
-
-    private User user;
+    private ArrayList<Post> posts = new ArrayList<>();
 
     @BindView(R.id.user_name)
     TextView userName;
@@ -63,7 +61,10 @@ public class UserDetailActivity extends AppCompatActivity {
     @BindView(R.id.user_post_btn)
     Button userPostButton;
 
-    private String username;
+    @BindView(R.id.postRecyclerView)
+    RecyclerView postRecyclerView;
+
+    public PostAdapter postAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,34 +72,95 @@ public class UserDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_detail);
         ButterKnife.bind(this);
 
-        setUserData();
+        postRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        postAdapter = new PostAdapter();
+        postRecyclerView.setAdapter(postAdapter);
 
+        loadUserData();
 
     }
 
-    private void setUserData() {
-        String stringName = getIntent().getStringExtra(EXTRA_REAL_NAME);
-        String stringUserName = getIntent().getStringExtra(EXTRA_USER_NAME);
+    private void loadUserData() {
         String stringId = getIntent().getStringExtra(EXTRA_USER_ID);
-        String stringAddress = getIntent().getStringExtra(EXTRA_USER_ADDRESS);
-        String stringCity = getIntent().getStringExtra(EXTRA_USER_CITY);
-        String stringWebsite = getIntent().getStringExtra(EXTRA_USER_WEBSITE);
-        String stringCompany = getIntent().getStringExtra(EXTRA_USER_COMPANY);
-        String stringPhoneNumber = getIntent().getStringExtra(EXTRA_USER_PHONENUMBER);
-        String stringEmail = getIntent().getStringExtra(EXTRA_USER_EMAIL);
 
-        userName.setText(stringUserName);
-        userId.setText(stringId);
-        userAddress.setText(stringAddress);
-        userRealName.setText(stringName);
-        userWebsite.setText(stringWebsite);
-        userCompany.setText(stringCompany);
-        userCity.setText(stringCity);
-        userPhoneNumber.setText(stringPhoneNumber);
-        userEmail.setText(stringEmail);
+        loadUserDetails(stringId);
+
     }
 
     @OnClick(R.id.user_post_btn)
     protected void postButtonClicked() {
+//        String userId = getIntent().getStringExtra(EXTRA_USER_ID);
+        loadPost();
     }
-}
+
+    void loadPost() {
+
+        RestApi.getInstance()
+                .getUserPostDetails()
+                .subscribe(new Observer<List<Post>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<Post> postList) {
+                        posts = (ArrayList<Post>) postList;
+
+                            setPost(posts);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("Otis", "onError: ");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+        void loadUserDetails (String id){
+            RestApi.getInstance().getUserDetails(id)
+                    .subscribe(new Observer<User>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(User user) {
+                            showUserDetails(user);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+
+        }
+
+        void showUserDetails (User user){
+            userName.setText(user.getUsername());
+            userId.setText(String.valueOf(user.getId()));
+            userAddress.setText(user.getAddress().getStreet());
+            userRealName.setText(user.getName());
+            userWebsite.setText(user.getWebsite());
+            userCompany.setText(user.getCompany().getName());
+            userCity.setText(user.getAddress().getCity());
+            userPhoneNumber.setText(user.getPhone());
+            userEmail.setText(user.getEmail());
+        }
+
+        void setPost (ArrayList<Post> posts) {
+            postAdapter.setUserPosts(posts);
+        }
+    }

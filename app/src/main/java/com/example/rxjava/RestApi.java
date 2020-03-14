@@ -4,7 +4,6 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -17,9 +16,6 @@ public class RestApi {
 
     private final UserAPIClient userAPIClient;
     private static RestApi instance;
-    private List<User> users;
-    User user;
-
 
     public RestApi() {
 
@@ -45,6 +41,20 @@ public class RestApi {
     public Observable<List<User>> getUserLists() {
 
         return userAPIClient.getUsers()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<User> getUserDetails(String id) {
+
+        return userAPIClient.getUserDetails(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<List<Post>> getUserPostDetails() {
+
+        return userAPIClient.getPosts()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
