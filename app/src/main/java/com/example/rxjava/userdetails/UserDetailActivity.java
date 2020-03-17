@@ -89,14 +89,14 @@ public class UserDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.user_post_btn)
     protected void postButtonClicked() {
-//        String userId = getIntent().getStringExtra(EXTRA_USER_ID);
-        loadPost();
+        String userId = getIntent().getStringExtra(EXTRA_USER_ID);
+        loadPost(userId);
     }
 
-    void loadPost() {
+    void loadPost(String id) {
 
         RestApi.getInstance()
-                .getUserPostDetails()
+                .getUserPostDetails(id)
                 .subscribe(new Observer<List<Post>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -107,7 +107,7 @@ public class UserDetailActivity extends AppCompatActivity {
                     public void onNext(List<Post> postList) {
                         posts = (ArrayList<Post>) postList;
 
-                            setPost(posts);
+                        setPost(posts);
                     }
 
                     @Override
@@ -122,45 +122,45 @@ public class UserDetailActivity extends AppCompatActivity {
                 });
     }
 
-        void loadUserDetails (String id){
-            RestApi.getInstance().getUserDetails(id)
-                    .subscribe(new Observer<User>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
+    void loadUserDetails(String id) {
+        RestApi.getInstance().getUserDetails(id)
+                .subscribe(new Observer<User>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-                        }
+                    }
 
-                        @Override
-                        public void onNext(User user) {
-                            showUserDetails(user);
-                        }
+                    @Override
+                    public void onNext(User user) {
+                        showUserDetails(user);
+                    }
 
-                        @Override
-                        public void onError(Throwable e) {
+                    @Override
+                    public void onError(Throwable e) {
 
-                        }
+                    }
 
-                        @Override
-                        public void onComplete() {
+                    @Override
+                    public void onComplete() {
 
-                        }
-                    });
+                    }
+                });
 
-        }
-
-        void showUserDetails (User user){
-            userName.setText(user.getUsername());
-            userId.setText(String.valueOf(user.getId()));
-            userAddress.setText(user.getAddress().getStreet());
-            userRealName.setText(user.getName());
-            userWebsite.setText(user.getWebsite());
-            userCompany.setText(user.getCompany().getName());
-            userCity.setText(user.getAddress().getCity());
-            userPhoneNumber.setText(user.getPhone());
-            userEmail.setText(user.getEmail());
-        }
-
-        void setPost (ArrayList<Post> posts) {
-            postAdapter.setUserPosts(posts);
-        }
     }
+
+    void showUserDetails(User user) {
+        userName.setText(user.getUsername());
+        userId.setText(String.valueOf(user.getId()));
+        userAddress.setText(user.getAddress().getStreet());
+        userRealName.setText(user.getName());
+        userWebsite.setText(user.getWebsite());
+        userCompany.setText(user.getCompany().getName());
+        userCity.setText(user.getAddress().getCity());
+        userPhoneNumber.setText(user.getPhone());
+        userEmail.setText(user.getEmail());
+    }
+
+    void setPost(ArrayList<Post> posts) {
+        postAdapter.setUserPosts(posts);
+    }
+}

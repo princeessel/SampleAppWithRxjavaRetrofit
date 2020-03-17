@@ -52,9 +52,9 @@ public class RestApi {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<List<Post>> getUserPostDetails() {
+    public Observable<List<Post>> getUserPostDetails(String id) {
 
-        return userAPIClient.getPosts()
+        return userAPIClient.getPosts(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

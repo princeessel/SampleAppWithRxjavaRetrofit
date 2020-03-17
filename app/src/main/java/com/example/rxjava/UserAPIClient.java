@@ -5,6 +5,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface UserAPIClient {
 
@@ -15,5 +16,5 @@ public interface UserAPIClient {
     Observable<User> getUserDetails(@Path("id") String id);
 
     @GET("posts")
-    Observable<List<Post>> getPosts();
+    Observable<List<Post>> getPosts(@Query("userId") String userId);
 }

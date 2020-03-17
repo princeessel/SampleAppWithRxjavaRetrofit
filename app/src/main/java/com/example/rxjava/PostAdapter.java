@@ -18,7 +18,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     private ArrayList<Post> posts = new ArrayList<>();
 
     public PostAdapter() {
-//        this.posts = posts;
     }
 
     @NonNull
@@ -31,6 +30,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull PostAdapter.ViewHolder holder, int position) {
+        holder.userId.setText(String.valueOf(posts.get(position).getUserId()));
         holder.userPostTitle.setText(posts.get(position).getTitle());
         holder.userPostBody.setText(posts.get(position).getBody());
 
@@ -47,6 +47,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         @BindView(R.id.user_post_title)
         TextView userPostTitle;
+
+        @BindView(R.id.user_id)
+        TextView userId;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
