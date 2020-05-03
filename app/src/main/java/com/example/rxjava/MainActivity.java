@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.OnIte
 
         userAdapter.setOnClickListener(MainActivity.this);
 
-        fetchData();
+        fetchUsers();
     }
 
     @Override
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.OnIte
         userAdapter.setUserList(users);
     }
 
-    private void fetchData() {
+    private void fetchUsers() {
 
         RestApi.getInstance()
                 .getUserLists()

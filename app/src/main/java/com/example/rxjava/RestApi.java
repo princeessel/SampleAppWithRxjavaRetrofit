@@ -1,5 +1,6 @@
 package com.example.rxjava;
 
+import androidx.annotation.NonNull;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -30,6 +31,7 @@ public class RestApi {
 
     }
 
+    @NonNull
     public static RestApi getInstance() {
         if (instance == null) {
             instance = new RestApi();
@@ -47,15 +49,21 @@ public class RestApi {
 
     public Observable<User> getUserDetails(String id) {
 
-        return userAPIClient.getUserDetails(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        return userAPIClient.getUserDetails(id);
+    }
+
+    public Observable<List<Album>> getUserAlbums(String id) {
+
+        return userAPIClient.getAlbums(id);
+    }
+
+    public Observable<List<Photo>> getUserPhotos(String id) {
+
+        return userAPIClient.getPhotos(id);
     }
 
     public Observable<List<Post>> getUserPostDetails(String id) {
 
-        return userAPIClient.getPosts(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        return userAPIClient.getPosts(id);
     }
 }

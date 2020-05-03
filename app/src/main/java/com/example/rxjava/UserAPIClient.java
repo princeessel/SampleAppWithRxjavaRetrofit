@@ -17,4 +17,10 @@ public interface UserAPIClient {
 
     @GET("posts")
     Observable<List<Post>> getPosts(@Query("userId") String userId);
+
+    @GET("albums")
+    Observable<List<Album>> getAlbums(@Query("userId") String id);
+
+    @GET("photos")
+    Observable<List<Photo>> getPhotos(@Query("albumId") String albumId);
 }

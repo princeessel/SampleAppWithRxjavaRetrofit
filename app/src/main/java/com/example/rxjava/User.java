@@ -35,6 +35,10 @@ public class User {
     @Expose
     private Post post;
 
+    @SerializedName("album")
+    @Expose
+    private Album album;
+
     public Integer getId() {
         return id;
     }
@@ -105,6 +109,14 @@ public class User {
 
     public void setPost(List<Post> post) {
         this.post = (Post) post;
+    }
+
+    public Album getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(List<Album> albums) {
+        this.album = (Album) albums;
     }
 
 }

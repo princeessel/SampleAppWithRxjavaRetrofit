@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Rxjava</string>
+
+    <string name="user_albums">Albums</string>
+    <string name="user_photos">User Photos</string>
+    <string name="retrieve_user_photos">Retrieve User Photos</string>
+    <string name="placeholder_image">Placeholder Image</string>
+    <string name="spinner_title">Select Album</string>
+    <string name="spinner_text">User Album</string>
+    <string name="title">Title</string>
+    <string name="albumid">Album Id</string>
+    <string name="username">Username: </string>
+
 </resources>
