@@ -29,11 +29,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         this.listener = listener;
     }
 
-
-
-
-
-    public UserAdapter(    Context context, ArrayList<User> users) {
+    public UserAdapter(Context context, ArrayList<User> users) {
         userList = users;
         this.context = context;
     }
@@ -77,7 +73,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         }
     }
 
-    public void setUserList(ArrayList<User> users) {
+    void setUserList(ArrayList<User> users) {
         userList = users;
         notifyDataSetChanged();
     }

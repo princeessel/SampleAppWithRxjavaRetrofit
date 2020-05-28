@@ -18,7 +18,7 @@ public class RestApi {
     private final UserAPIClient userAPIClient;
     private static RestApi instance;
 
-    public RestApi() {
+    private RestApi() {
 
         final Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -32,7 +32,7 @@ public class RestApi {
     }
 
     @NonNull
-    public static RestApi getInstance() {
+    public static synchronized RestApi getInstance() {
         if (instance == null) {
             instance = new RestApi();
         }
@@ -40,7 +40,7 @@ public class RestApi {
     }
 
 
-    public Observable<List<User>> getUserLists() {
+    Observable<List<User>> getUserLists() {
 
         return userAPIClient.getUsers()
                 .subscribeOn(Schedulers.io())
@@ -57,7 +57,7 @@ public class RestApi {
         return userAPIClient.getAlbums(id);
     }
 
-    public Observable<List<Photo>> getUserPhotos(String id) {
+    Observable<List<Photo>> getUserPhotos(String id) {
 
         return userAPIClient.getPhotos(id);
     }

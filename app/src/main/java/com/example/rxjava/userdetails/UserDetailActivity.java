@@ -6,18 +6,21 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rxjava.Album;
 import com.example.rxjava.AlbumDialogFragment;
+import com.example.rxjava.PhotosAdapter;
 import com.example.rxjava.Post;
 import com.example.rxjava.PostAdapter;
 import com.example.rxjava.R;
@@ -38,8 +41,7 @@ import io.reactivex.schedulers.Schedulers;
 public class UserDetailActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private static final String EXTRA_USER_ID = "EXTRA_USER_ID";
-
-    private ArrayList<Post> posts = new ArrayList<>();
+    private static final String EXTRA_IMAGE_PATH = "EXTRA_IMAGE_PATH";
 
     @BindView(R.id.user_name)
     TextView userName;
@@ -73,7 +75,7 @@ public class UserDetailActivity extends AppCompatActivity implements AdapterView
     Button userPostButton;
 
     @BindView(R.id.get_photos_btn)
-    Button userPhotosButton;
+    Button onGetPhotosButtonClicked;
 
     @BindView(R.id.postRecyclerView)
     RecyclerView postRecyclerView;
@@ -84,9 +86,14 @@ public class UserDetailActivity extends AppCompatActivity implements AdapterView
     @BindView(R.id.spinner)
     AppCompatSpinner spinner;
 
+    @BindView(R.id.detail_image_placeholder)
+    public ImageView replaceUserImagePlaceholder;
+
     public PostAdapter postAdapter;
 
     private ArrayList<Album> albumsList = new ArrayList<>();
+
+    private ArrayList<Post> posts = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,14 +124,17 @@ public class UserDetailActivity extends AppCompatActivity implements AdapterView
     }
 
     @OnClick(R.id.get_photos_btn)
-    protected void photosButtonClicked() {
-            showAlbumDialog();
+    protected void onGetPhotosButtonClicked() {
+        showAlbumDialog();
     }
 
     public void showAlbumDialog() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         AlbumDialogFragment albumDialogFragment = AlbumDialogFragment.newInstance("Retrieve User Photos");
-        albumDialogFragment.show(fragmentManager, "fragment_album_dialog");
+        Fragment fr = getSupportFragmentManager().findFragmentByTag("fragment_album_dialog");
+        if (fr == null) {
+            albumDialogFragment.show(fragmentManager, "fragment_album_dialog");
+        }
     }
 
     void loadPost(String id) {
@@ -206,7 +216,7 @@ public class UserDetailActivity extends AppCompatActivity implements AdapterView
     }
 
     void loadAlbums(String id) {
-
+        progressBar.setVisibility(View.VISIBLE);
         RestApi.getInstance()
                 .getUserAlbums(id)
                 .subscribeOn(Schedulers.io())
@@ -219,6 +229,7 @@ public class UserDetailActivity extends AppCompatActivity implements AdapterView
 
                     @Override
                     public void onNext(List<Album> albums) {
+                        progressBar.setVisibility(View.GONE);
                         albumsList = (ArrayList<Album>) albums;
                         showSpinnerList();
                     }

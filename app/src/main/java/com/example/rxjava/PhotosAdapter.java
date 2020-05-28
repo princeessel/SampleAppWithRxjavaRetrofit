@@ -15,18 +15,26 @@ import java.util.ArrayList;
 import butterknife.BindView;
 
 public class PhotosAdapter extends BaseAdapter {
-    Context context;
+    private Context context;
     private ArrayList<String> photoUrls;
 
-    LayoutInflater inflater;
+    OnPhotoClickedItemListener photoListener;
 
     @BindView(R.id.thumbnails)
     ImageView thumbnails;
 
+    public interface OnPhotoClickedItemListener {
+        void onPhotoItemClicked(int position);
+    }
+
     public PhotosAdapter(Context context, ArrayList<String> photoUrls) {
         this.context = context;
         this.photoUrls = photoUrls;
-        inflater = LayoutInflater.from(context);
+        LayoutInflater.from(context);
+    }
+
+    public void setOnPhotoClickedItemListener(OnPhotoClickedItemListener photoListener) {
+       this.photoListener = photoListener;
     }
 
     @Override
@@ -59,6 +67,16 @@ public class PhotosAdapter extends BaseAdapter {
                 .load(url)
                 .fit()
                 .centerCrop().into(thumbnails);
+
+        thumbnails.setOnClickListener(v -> {
+            if (context != null) {
+                if (position != GridView.INVALID_POSITION) {
+                    if (photoListener != null) {
+                    photoListener.onPhotoItemClicked(position);
+                    }
+                }
+            }
+        });
         return thumbnails;
     }
 }
